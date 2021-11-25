@@ -32,14 +32,26 @@ const getValuesById = async (req, res, id) => {
 
 const setValues = async (req, res) => {
   try {
-    const newPerson = {
-      name: 'Mike',
-      age: 28,
-      hobbies: ['fishing', 'hunter']
-    };
-    const newPersonData = await createNewPerson(newPerson);
-    res.writeHead(201, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(newPersonData));
+    // const newPerson = {
+    //   name: 'Mike',
+    //   age: 28,
+    //   hobbies: ['fishing', 'hunter']
+    // };
+
+    let newPerson = '';
+    req
+      .on('data', chunk => {
+        newPerson += chunk.toString();
+      })
+      .on('end', async () => {
+        const newPersonData = await createNewPerson(JSON.parse(newPerson));
+        res.writeHead(201, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(newPersonData));
+      });
+
+    // const newPersonData = await createNewPerson(newPerson);
+    // res.writeHead(201, { 'Content-Type': 'application/json' });
+    // res.end(JSON.stringify(newPersonData));
   } catch (error) {
     console.log(error);
   }
