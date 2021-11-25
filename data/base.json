@@ -1,8 +1,14 @@
 [
   {
-    "id": "3",
+    "id": "1",
     "name": "John",
+    "age": 21,
+    "hobbies": ["sleep", "eat", "play"]
+  },
+  {
+    "id": "2",
+    "name": "Peter",
     "age": 40,
-    "hobbies": ["sleep", "eat", "game"]
+    "hobbies": ["work", "learn"]
   }
 ]

@@ -1,4 +1,9 @@
-const { getBaseDate } = require('./utils');
+const { getBaseDate, getBaseDateById } = require('./utils');
+
+const setDefaultError = res => {
+  res.writeHead(404, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify('No data'));
+};
 
 const getValues = async (req, res) => {
   try {
@@ -9,8 +14,20 @@ const getValues = async (req, res) => {
     console.log(error);
   }
 };
-// const getValues = async (req, res, data) => {
-//   await console.log('object');
-// };
 
-module.exports = { getValues };
+const getValuesById = async (req, res, id) => {
+  try {
+    const data = await getBaseDateById(id);
+    if (!data) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify('This id does not exist'));
+    } else {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { getValues, setDefaultError, getValuesById };

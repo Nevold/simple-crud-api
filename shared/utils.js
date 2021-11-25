@@ -5,4 +5,11 @@ const getBaseDate = () => {
   });
 };
 
-module.exports = { getBaseDate };
+const getBaseDateById = id => {
+  return new Promise((resolve, reject) => {
+    const dataById = data.find(elem => elem.id === id);
+    resolve(JSON.stringify(dataById));
+  });
+};
+
+module.exports = { getBaseDate, getBaseDateById };
