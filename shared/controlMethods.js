@@ -19,7 +19,7 @@ const getValuesById = async (req, res, id) => {
   try {
     const data = await getBaseDateById(id);
     if (!data) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify('This id does not exist'));
     } else {
       res.writeHead(200, { 'Content-Type': 'application/json' });
