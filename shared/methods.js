@@ -1,8 +1,8 @@
 const { getBaseDate, getBaseDateById, createNewPerson } = require('./utils');
 
-const setDefaultError = res => {
+const setDefaultError = (res, error = 'No data') => {
   res.writeHead(404, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify('No data'));
+  res.end(JSON.stringify(error));
 };
 
 const getValues = async (req, res) => {
@@ -19,8 +19,9 @@ const getValuesById = async (req, res, id) => {
   try {
     const data = await getBaseDateById(id);
     if (!data) {
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify('This id does not exist'));
+      // res.writeHead(404, { 'Content-Type': 'application/json' });
+      // res.end(JSON.stringify('This id does not exist'));
+      setDefaultError(res, 'This id does not exist');
     } else {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(data);
@@ -44,9 +45,14 @@ const setValues = async (req, res) => {
         newPerson += chunk.toString();
       })
       .on('end', async () => {
-        const newPersonData = await createNewPerson(JSON.parse(newPerson));
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(newPersonData));
+        const { name, age, hobbies } = JSON.parse(newPerson);
+        if (!name || !age || !hobbies) {
+          setDefaultError(res, 'Required fields not entered');
+        } else {
+          const newPersonData = await createNewPerson(JSON.parse(newPerson));
+          res.writeHead(201, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(newPersonData));
+        }
       });
 
     // const newPersonData = await createNewPerson(newPerson);
