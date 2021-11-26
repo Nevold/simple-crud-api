@@ -35,4 +35,12 @@ const createNewPerson = async newPerson => {
   return newPersonData;
 };
 
-module.exports = { getBaseDate, getBaseDateById, createNewPerson };
+const updateNewPerson = async (newPerson, id) => {
+  const index = data.findIndex(elem => elem.id === id);
+
+  data[index] = { id, ...newPerson };
+  await writeFile('./data/bd.json', data);
+  return data[index];
+};
+
+module.exports = { getBaseDate, getBaseDateById, createNewPerson, updateNewPerson };
