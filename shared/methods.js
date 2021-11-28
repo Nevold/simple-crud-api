@@ -1,6 +1,6 @@
 const { getBaseDate, getBaseDateById, createNewPerson, updateNewPerson, deleteById } = require('./utils');
 
-const setDefaultError = (res, error = 'No data', status = '404') => {
+const setDefaultError = (res, error = `There's nothing here (Not Found)`, status = '404') => {
   res.writeHead(status, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(error));
 };

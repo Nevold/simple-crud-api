@@ -13,7 +13,11 @@ const PORT = process.env.PORT || 8080;
 
 const server = http.createServer((req, res) => {
   const id = req.url.split('/').pop();
+  const pathArray = req.url.split('/').length;
   switch (true) {
+    case pathArray > 3:
+      setDefaultError(res);
+      break;
     case req.url === '/person' && req.method === 'GET':
       getValues(req, res);
       break;
