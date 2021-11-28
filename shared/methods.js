@@ -54,9 +54,11 @@ const setValues = async (req, res) => {
 const updateValuesById = async (req, res, id) => {
   try {
     const data = await getBaseDateById(id);
-    // const re=/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/
+    const re = /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/;
     if (!data) {
       setDefaultError(res, 'This id does not exist');
+    } else if (!re.test(JSON.parse(data).id)) {
+      setDefaultError(res, 'This id is not valid');
     } else {
       const { name: oldName, age: oldAge, hobbies: oldHobbies } = JSON.parse(data);
       let newPerson = '';
