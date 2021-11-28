@@ -2,19 +2,6 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const data = require('../data/bd.json');
 
-// const getBaseDate = async () => {
-//   return new Promise((resolve, reject) => {
-//     resolve(JSON.stringify(data));
-//   });
-// };
-
-// const getBaseDateById = async id => {
-//   return new Promise((resolve, reject) => {
-//     const dataById = data.find(elem => elem.id === id);
-//     resolve(JSON.stringify(dataById));
-//   });
-// };
-
 const getBaseDate = async () => JSON.stringify(data);
 
 const getBaseDateById = async id => {

@@ -12,7 +12,6 @@ const {
 const PORT = process.env.PORT || 8080;
 
 const server = http.createServer((req, res) => {
-  console.log('Server request');
   const id = req.url.split('/').pop();
   switch (true) {
     case req.url === '/person' && req.method === 'GET':

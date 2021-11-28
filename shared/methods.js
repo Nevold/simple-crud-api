@@ -18,8 +18,11 @@ const getValues = async (req, res) => {
 const getValuesById = async (req, res, id) => {
   try {
     const data = await getBaseDateById(id);
+    const re = /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/;
     if (!data) {
       setDefaultError(res, 'This id does not exist');
+    } else if (!re.test(JSON.parse(data).id)) {
+      setDefaultError(res, 'This id is not valid', 404);
     } else {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(data);
@@ -39,7 +42,7 @@ const setValues = async (req, res) => {
       .on('end', async () => {
         const { name, age, hobbies } = JSON.parse(newPerson);
         if (!name || !age || !hobbies) {
-          setDefaultError(res, 'Required fields not entered');
+          setDefaultError(res, 'Required fields not entered', 400);
         } else {
           const newPersonData = await createNewPerson(JSON.parse(newPerson));
           res.writeHead(201, { 'Content-Type': 'application/json' });
@@ -58,7 +61,7 @@ const updateValuesById = async (req, res, id) => {
     if (!data) {
       setDefaultError(res, 'This id does not exist');
     } else if (!re.test(JSON.parse(data).id)) {
-      setDefaultError(res, 'This id is not valid');
+      setDefaultError(res, 'This id is not valid', 400);
     } else {
       const { name: oldName, age: oldAge, hobbies: oldHobbies } = JSON.parse(data);
       let newPerson = '';
@@ -88,11 +91,14 @@ const updateValuesById = async (req, res, id) => {
 const deleteValuesById = async (req, res, id) => {
   try {
     const data = await getBaseDateById(id);
+    const re = /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/;
     if (!data) {
       setDefaultError(res, 'This id does not exist');
+    } else if (!re.test(JSON.parse(data).id)) {
+      setDefaultError(res, 'This id is not valid', 400);
     } else {
       deleteById(id);
-      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.writeHead(204, { 'Content-Type': 'application/json' });
       res.end('Сurrent id deleted');
     }
   } catch (error) {
