@@ -43,4 +43,9 @@ const updateNewPerson = async (newPerson, id) => {
   return data[index];
 };
 
-module.exports = { getBaseDate, getBaseDateById, createNewPerson, updateNewPerson };
+const deleteById = async id => {
+  const dataWithoutCurrentId = data.filter(elem => elem.id !== id);
+  await writeFile('./data/bd.json', dataWithoutCurrentId);
+};
+
+module.exports = { getBaseDate, getBaseDateById, createNewPerson, updateNewPerson, deleteById };

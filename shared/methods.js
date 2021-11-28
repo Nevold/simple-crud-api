@@ -1,4 +1,4 @@
-const { getBaseDate, getBaseDateById, createNewPerson, updateNewPerson } = require('./utils');
+const { getBaseDate, getBaseDateById, createNewPerson, updateNewPerson, deleteById } = require('./utils');
 
 const setDefaultError = (res, error = 'No data', status = '404') => {
   res.writeHead(status, { 'Content-Type': 'application/json' });
@@ -85,4 +85,19 @@ const updateValuesById = async (req, res, id) => {
   }
 };
 
-module.exports = { getValues, setDefaultError, getValuesById, setValues, updateValuesById };
+const deleteValuesById = async (req, res, id) => {
+  try {
+    const data = await getBaseDateById(id);
+    if (!data) {
+      setDefaultError(res, 'This id does not exist');
+    } else {
+      deleteById(id);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end('Сurrent id deleted');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { getValues, setDefaultError, getValuesById, setValues, updateValuesById, deleteValuesById };
