@@ -1,15 +1,29 @@
-const path = require('path');
-const nodeExternals = require('webpack-node-externals');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import nodeExternals from 'webpack-node-externals';
 
-module.exports = {
-  entry: './src/server.ts',
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
+  mode: 'production',
   target: 'node',
-  externals: [nodeExternals()],
+  entry: './src/server.ts',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'server.js',
+    module: true,
+  },
   module: {
     rules: [
       {
         test: /\.ts$/,
-        use: 'ts-loader',
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+          },
+        },
         exclude: /node_modules/,
       },
     ],
@@ -17,8 +31,14 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js'],
   },
-  output: {
-    filename: 'server.js',
-    path: path.resolve(__dirname, 'dist'),
+  experiments: {
+    outputModule: true,
   },
+  externalsPresets: { node: true },
+  externals: [
+    nodeExternals({
+      modulesFromFile: true,
+      importType: 'module',
+    }),
+  ],
 };
