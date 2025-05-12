@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http';
+import { Worker } from 'cluster';
 
 export interface Item {
   id: string;
@@ -23,4 +24,12 @@ export interface Route {
 
 export interface Router {
   [path: string]: Route;
+}
+
+export interface WorkerPorts {
+  [workerId: string]: number;
+}
+
+export interface ClusterWorker extends Worker {
+  workerPort?: number;
 }

@@ -1,6 +1,8 @@
 import { IncomingMessage, ServerResponse } from 'http';
 
 export class Utils {
+  static lastWorkerIndex: number;
+
   static parseJSONBody = <T>(req: IncomingMessage): Promise<T | null> => {
     return new Promise((resolve) => {
       const decoder = new TextDecoder();
