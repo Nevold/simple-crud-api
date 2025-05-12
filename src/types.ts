@@ -1,0 +1,35 @@
+import { IncomingMessage, ServerResponse } from 'http';
+import { Worker } from 'cluster';
+
+export interface Item {
+  id: string;
+  username: string;
+  age: number;
+  hobbies: Array<string>;
+}
+
+export interface Database {
+  [key: string]: Item;
+}
+
+export type Handler = (
+  req: IncomingMessage,
+  res: ServerResponse,
+  params?: Record<string, string>,
+) => Promise<void> | void;
+
+export interface Route {
+  [method: string]: Handler;
+}
+
+export interface Router {
+  [path: string]: Route;
+}
+
+export interface WorkerPorts {
+  [workerId: string]: number;
+}
+
+export interface ClusterWorker extends Worker {
+  workerPort?: number;
+}
