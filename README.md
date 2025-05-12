@@ -2,7 +2,7 @@
 
 # Install dependencies
 
-- git clone https://github.com/Nevold/crud-api.git
+- git clone https://github.com/Nevold/simple-crud-api.git
 - go to folder `develop`
 - `npm install`
 
