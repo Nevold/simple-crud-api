@@ -4,7 +4,7 @@ import { URL } from 'url';
 import { Utils } from './utils.ts';
 import { RouterMethods } from './router.ts';
 
-const server = http.createServer(async (req, res) => {
+export const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url || '', `http://${req.headers.host}`);
     const path = url.pathname;
