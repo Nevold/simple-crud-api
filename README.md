@@ -3,28 +3,28 @@
 # Install dependencies
 
 - git clone https://github.com/Nevold/crud-api.git
-- go to folder develop
-- npm install
+- go to folder `develop`
+- `npm install`
 
 # Run in development
 
-npm run start:dev
+`npm run start:dev`
 
 # Run in production
 
-npm run start:prod
+`npm run start:prod`
 
 # Run multiple instances
 
-npm run start:multi
+`npm run start:multi`
 
 # Run tests
 
-npm run test
+`npm run test`
 
 # How to use the app
 
-For use, try for example Postman.
+For use, try for example `Postman`.
 
 1. The server runs on port 4000 by default. You can change it in the file .env
 2. API path `/users`:
